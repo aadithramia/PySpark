@@ -1,0 +1,22 @@
+{
+    "queue": "default",
+    "file": "hdfs://namenode0-vip.MTPrime-PROD-CO01.CO01.ap.gbl/projects/ProductAdsOffline/users/shravanr/SendToSolr.py",
+    "executorMemory": "6G",
+    "executorCores": 2,
+    "numExecutors": 3,
+    "driverMemory": "2G",
+    "driverCores": 2,
+    "conf": {
+      "spark.app.name": "SendToSolr",
+      "spark.pyspark.python": "./py_environment/python.exe",
+      "spark.pyspark.driver.python": "./py_environment/python.exe",
+      "spark.hadoop.fs.adl.oauth2.access.token.provider.type": "Custom",
+      "spark.hadoop.fs.adl.oauth2.access.token.provider": "com.microsoft.magnetar.credential.hadoop.adl.MTTokenProvider",
+      "spark.hadoop.fs.adl.oauth2.magnetar.tenantid": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+      "spark.hadoop.fs.adl.oauth2.magnetar.clientid": "47236fd3-1888-4bbc-958b-23ef065433fc"
+    },
+    "archives": [
+      "hdfs://namenode0-vip.MTPrime-PROD-CO01.CO01.ap.gbl/projects/ProductAdsOffline/users/shravanr/dependencies.tar.gz#py_environment"
+    ],
+    "sparkVersion": "3.3"
+  }
