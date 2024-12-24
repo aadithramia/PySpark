@@ -39,12 +39,19 @@ def index_batch(batch):
     # Create Solr connection using the authenticated session
     solr = pysolr.Solr(SOLR_URL, always_commit=False, session=session)
     
-    documents = [row.asDict() for row in batch]
+    # Process the partition in chunks of batch_size rows
+    chunk = []
+    for row in batch:
+        chunk.append(row.asDict())
+        if len(chunk) == batch_size:
+            solr.add(chunk)
+            print(f"Indexed batch of {len(chunk)} documents.")
+            chunk = []
     
-    if documents:
-        solr.add(documents)
-        #print(f"Indexed batch of {len(documents)} documents.")
-        print('indexed')
+    # Process any remaining rows in the last chunk
+    if chunk:
+        solr.add(chunk)
+        print(f"Indexed batch of {len(chunk)} documents.")
 
 
 
@@ -67,7 +74,6 @@ df = df.withColumn("SampleProductNames", F.split(df["SampleProductNames"], ","))
 df = df.withColumn("TopRetailers", F.split(df["TopRetailers"], ","))
 
 # df.show()
-
 # Process DataFrame in batches and index
 df.foreachPartition(index_batch)
 
