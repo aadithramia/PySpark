@@ -26,7 +26,16 @@ SOLR_URL = 'http://51.8.239.64/solr/PCBrands'
 USERNAME = 'igs'
 PASSWORD = 'igs345'
 
-
+def get_chunks(iterator, size):
+        """Yield successive chunks from the iterator."""
+        chunk = []
+        for row in iterator:
+            chunk.append(row.asDict())
+            if len(chunk) == size:
+                yield chunk
+                chunk = []
+        if chunk:
+            yield chunk
 
 def index_batch(batch):
     """Index a batch of documents to Solr with authentication."""
@@ -39,19 +48,12 @@ def index_batch(batch):
     # Create Solr connection using the authenticated session
     solr = pysolr.Solr(SOLR_URL, always_commit=False, session=session)
     
-    # Process the partition in chunks of batch_size rows
-    chunk = []
-    for row in batch:
-        chunk.append(row.asDict())
-        if len(chunk) == batch_size:
+    for chunk in get_chunks(batch, batch_size):
+        try:
             solr.add(chunk)
             print(f"Indexed batch of {len(chunk)} documents.")
-            chunk = []
-    
-    # Process any remaining rows in the last chunk
-    if chunk:
-        solr.add(chunk)
-        print(f"Indexed batch of {len(chunk)} documents.")
+        except Exception as e:
+            print(f"Error indexing batch: {e}")
 
 
 
@@ -66,7 +68,7 @@ df = spark.read.format("csv") \
     .option("header", "false") \
     .load(input_stream)
 
-df = df.toDF("BrandId", "BrandName", "BrandAliases", "Domains", "NumProducts", "SampleProductNames", "NumRetailers", "TopRetailers")
+#df = df.toDF("BrandId", "BrandName", "BrandAliases", "Domains", "NumProducts", "SampleProductNames", "NumRetailers", "TopRetailers")
 
 
 df = df.withColumn("BrandAliases", F.split(df["BrandAliases"], ","))
