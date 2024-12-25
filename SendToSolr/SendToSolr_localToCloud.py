@@ -8,6 +8,7 @@ findspark.find()
 import requests
 from requests.auth import HTTPBasicAuth
 import pysolr
+import time
 
 
 from pyspark.sql import SparkSession
@@ -19,7 +20,7 @@ from pyspark.sql import functions as F
 
 #input_stream = "adl://bingads-platform-prod-vc1-c08.azuredatalakestore.net/local/users/shravanr/BPG/Brand/BrandData_Sample1000.csv"
 input_stream = r"C:\Users\shravanr\learning\spark\input_dir\BrandData_Raw_Sample1000.csv"
-batch_size = 350 # batch size for Spark partitioning
+batch_size = 500 # batch size for Spark partitioning
 
 # Solr connection details
 SOLR_URL = 'http://51.8.239.64/solr/PCBrands'
@@ -50,8 +51,11 @@ def index_batch(batch):
     
     for chunk in get_chunks(batch, batch_size):
         try:
+            start_time = time.time()
             solr.add(chunk)
-            print(f"Indexed batch of {len(chunk)} documents.")
+            end_time = time.time()
+            elapsed_time = end_time - start_time
+            print("Indexed {} documents in {:.2f} seconds.".format(len(chunk), elapsed_time))
         except Exception as e:
             print(f"Error indexing batch: {e}")
 
