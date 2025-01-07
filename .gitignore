@@ -6,3 +6,4 @@ a/*
 __pycache__/*
 *.log
 dependencies/*
+output_dir/*
