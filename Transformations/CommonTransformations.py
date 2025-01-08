@@ -12,7 +12,6 @@ spark = SparkSession.builder.appName("file_read")\
 
 data = spark.read \
     .format("json") \
-    .option("multiline", "true") \
     .load("CommonTransformations_input.json")
 
 #data = data.selectExpr("StoreId", "InvoiceNumber", "InvoiceDate", "explode(LineItems) as LineItem")
