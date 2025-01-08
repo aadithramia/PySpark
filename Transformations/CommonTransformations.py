@@ -4,7 +4,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql.types import *
 from pyspark.sql.functions import *
 
-spark = SparkSession.builder.appName("file_read")\
+spark = SparkSession.builder.appName("CommonTransformations")\
         .master("local[3]") \
         .config("spark.streaming.stopGracefullyOnShutdown", "true") \
         .config("spark.sql.streaming.schemaInference", "true") \
@@ -45,3 +45,5 @@ invoiceAmt = invoiceAmt.withColumn("InvoiceAmt", expr("cast(InvoiceAmt as int)")
 invoiceAmt.show(20)
 
 invoiceAmt.printSchema()
+
+input('a') #prompting for dummy input to prevent the program from ending. go to http://localhost:4040/ to look at the DAG
