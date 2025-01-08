@@ -9,3 +9,5 @@ dependencies/*
 **/output_dir/*
 **/*_checkpoint/*
 **/input_dir/*
+*.tar
+**/.ipynb_checkpoints/*
