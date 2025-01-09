@@ -8,6 +8,8 @@ spark = SparkSession.builder.appName("network_read")\
         .config("spark.streaming.stopGracefullyOnShutdown", "true") \
         .getOrCreate()
 
+#on a terminal, run ncat -lk 9999
+
 data = spark.readStream \
     .format("socket") \
     .option("host", "localhost") \

@@ -1,2 +1,2 @@
 Before running any structured streaming program,
-- delete the checkpoint folder
+- delete the checkpoint , output and archive folders
