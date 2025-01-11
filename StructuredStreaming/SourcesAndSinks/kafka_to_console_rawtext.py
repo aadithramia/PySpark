@@ -16,7 +16,7 @@ spark = SparkSession.builder.appName("kafka_to_console")\
 data = spark.readStream \
     .format("kafka") \
     .option("kafka.bootstrap.servers", "localhost:9092") \
-    .option("subscribe", "Topic1") \
+    .option("subscribe", "Topic2") \
     .option("startingOffsets", "earliest") \
     .load()
 
@@ -24,6 +24,7 @@ data.printSchema()
 
 values = data.select(col("value").cast("string"))
 
+# note : complete mode works only with aggregation queries. here we can only use update/append modes
 query = values.writeStream \
         .format("console") \
         .option("checkpointLocation", "checkpoint-dir") \

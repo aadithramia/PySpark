@@ -1,0 +1,10 @@
+{"EmployeeId": 1, "Name": "John Doe", "Salary": 50000, "Address": {"StreetName": "123 Elm St", "City": "Springfield", "Zip": "62701"}}
+{"EmployeeId": 2, "Name": "Jane Smith", "Salary": 60000, "Address": {"StreetName": "456 Oak St", "City": "Metropolis", "Zip": "62960"}}
+{"EmployeeId": 3, "Name": "Alice Johnson", "Salary": 55000, "Address": {"StreetName": "789 Pine St", "City": "Gotham", "Zip": "60601"}}
+{"EmployeeId": 4, "Name": "Bob Brown", "Salary": 70000, "Address": {"StreetName": "101 Maple St", "City": "Star City", "Zip": "63101"}}
+{"EmployeeId": 5, "Name": "Charlie Davis", "Salary": 65000, "Address": {"StreetName": "202 Birch St", "City": "Central City", "Zip": "64101"}}
+{"EmployeeId": 6, "Name": "Diana Prince", "Salary": 80000, "Address": {"StreetName": "303 Cedar St", "City": "Coast City", "Zip": "63102"}}
+{"EmployeeId": 7, "Name": "Eve Adams", "Salary": 75000, "Address": {"StreetName": "404 Walnut St", "City": "Bludhaven", "Zip": "64102"}}
+{"EmployeeId": 8, "Name": "Frank Miller", "Salary": 72000, "Address": {"StreetName": "505 Ash St", "City": "Keystone City", "Zip": "64103"}}
+{"EmployeeId": 9, "Name": "Grace Lee", "Salary": 68000, "Address": {"StreetName": "606 Cherry St", "City": "Fawcett City", "Zip": "64104"}}
+{"EmployeeId": 10, "Name": "Hank Green", "Salary": 71000, "Address": {"StreetName": "707 Poplar St", "City": "Smallville", "Zip": "64105"}}
