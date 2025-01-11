@@ -1,0 +1,8 @@
+how to find number of partitions for a DataFrame
+UDFs
+windowing functions
+partitioning n bucketing
+watermarking
+stateful transformation
+statestore
+spark sql
