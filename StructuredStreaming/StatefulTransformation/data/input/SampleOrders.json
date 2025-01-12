@@ -1,0 +1,4 @@
+{"TransactionDateTime": "2025-01-01T09:12:00", "Symbol": "AAPL", "OrderType": "BUY", "Qty": 50}
+{"TransactionDateTime": "2025-01-01T11:12:00", "Symbol": "AAPL", "OrderType": "BUY", "Qty": 4}
+{"TransactionDateTime": "2025-01-01T09:10:00", "Symbol": "AAPL", "OrderType": "BUY", "Qty": 4}
+{"TransactionDateTime": "2025-01-01T08:10:00", "Symbol": "AAPL", "OrderType": "BUY", "Qty": 3}
