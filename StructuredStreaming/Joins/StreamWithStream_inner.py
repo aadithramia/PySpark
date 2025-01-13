@@ -8,11 +8,12 @@ from pyspark.sql.types import *
 from pyspark.sql.functions import *
 
 spark = SparkSession.builder.appName("stream_join_with_staticdata")\
-        .master("local[3]") \
-        .config("spark.streaming.stopGracefullyOnShutdown", "true") \
-        .config("spark.sql.streaming.schemaInference", "true") \
-        .config("spark.jars.packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.2") \
-        .getOrCreate()
+	.master("local[3]") \
+	.config("spark.streaming.stopGracefullyOnShutdown", "true") \
+	.config("spark.sql.streaming.schemaInference", "true") \
+	.config("spark.jars.packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.2") \
+	.config("spark.sql.shuffle.partitions", "2") \
+	.getOrCreate()
 
 
 StreamA_schema = StructType([    
@@ -32,7 +33,7 @@ StreamA = spark.readStream \
 
 StreamA = StreamA.select(from_json(col("value").cast("string"), StreamA_schema).alias("data")) \
     .select("data.*") \
-	.withWatermark("EventTime", "1 hour")
+	.withWatermark("EventTime", "30 minutes")
 
 #StreamA.printSchema()
 
@@ -52,18 +53,25 @@ StreamB = spark.readStream \
 
 StreamB = StreamB.select(from_json(col("value").cast("string"), StreamB_schema).alias("data")) \
     .select("data.*") \
-	.withWatermark("EventTime", "1 hour")
+	.withWatermark("EventTime", "30 minutes")
 
-join_expr = StreamA["Key"] == StreamB["Key"]
+StreamA = StreamA.withColumnRenamed("EventTime", "EventTimeA")
+StreamB = StreamB.withColumnRenamed("EventTime", "EventTimeB")
+
+# Define join expression and join type
+join_expr = (StreamA["Key"] == StreamB["Key"]) #& (StreamA["EventTimeA"] <= StreamB["EventTimeB"] + expr("INTERVAL 1 HOUR"))
 join_type = "inner"
-joined_df = StreamA.join(StreamB, join_expr, join_type) \
-	.drop(StreamB.Key)
+
+# Perform join
+joined_df = StreamA.join(StreamB, join_expr, join_type)
+	
 
 query = joined_df.writeStream \
 	.outputMode("append") \
 	.format("console") \
 	.option("truncate", "false") \
 	.option("checkpointLocation", "C:/Users/shravanr/learning/spark/pyspark/StructuredStreaming/Joins/data/checkpoint-dir") \
+	.trigger(processingTime='10 seconds') \
 	.start() \
 	.awaitTermination()
 
