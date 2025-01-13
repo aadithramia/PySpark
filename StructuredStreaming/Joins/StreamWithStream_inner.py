@@ -59,7 +59,7 @@ StreamA = StreamA.withColumnRenamed("EventTime", "EventTimeA")
 StreamB = StreamB.withColumnRenamed("EventTime", "EventTimeB")
 
 # Define join expression and join type
-join_expr = (StreamA["Key"] == StreamB["Key"]) #& (StreamA["EventTimeA"] <= StreamB["EventTimeB"] + expr("INTERVAL 1 HOUR"))
+join_expr = (StreamA["Key"] == StreamB["Key"]) & (StreamA["EventTimeA"] <= StreamB["EventTimeB"] + expr("INTERVAL 1 HOUR"))
 join_type = "inner"
 
 # Perform join
