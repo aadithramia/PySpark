@@ -2,6 +2,7 @@ import findspark
 findspark.init()
 from pyspark.sql import SparkSession
 from pyspark.sql.types import *
+from pyspark.sql.functions import *
 
 spark = SparkSession.builder.appName("static_static_join")\
 	.master("local[3]") \
@@ -34,5 +35,7 @@ joined_data.select(DataSetB["Key"], "ValueA", "ValueB").show()
 #this works too
 #joined_data.select(DataSetB.Key, "ValueA", "ValueB").show()
 
-#left outer
-joined_data = DataSetA.join(DataSetB, join_expr, "left outer").show()
+# selecting specific columns from join results and aliasing. the ambiguous column needs to be dealt with separately as shown
+joined_data.select(DataSetB.Key, col("ValueA").alias("Name"), col("ValueB").alias("Age")) \
+	.withColumnRenamed("Key", "ID") \
+	.show()
