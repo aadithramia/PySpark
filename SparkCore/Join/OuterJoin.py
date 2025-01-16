@@ -2,6 +2,7 @@ import findspark
 findspark.init()
 from pyspark.sql import SparkSession
 from pyspark.sql.types import *
+from pyspark.sql.functions import *
 
 spark = SparkSession.builder.appName("static_static_join")\
 	.master("local[3]") \
@@ -24,8 +25,20 @@ join_type = "left" # this works too
 #join_expr = "leftOuter" # this doesnt work (not supported)
 
 #left outer
-joined_data = DataSetA.join(DataSetB, join_expr, join_type).show()
+print("Left outer join\n")
+joined_data = DataSetA.join(DataSetB, join_expr, join_type)
+
+joined_data.show()
+
+#drop duplicate column
+#replace null with default value
+joined_data \
+.drop(DataSetB.Key) \
+.withColumn("ValueB", coalesce(DataSetB["ValueB"], lit(0))).show()
+
+print("Right outer join\n")
 
 DataSetA.join(DataSetB, join_expr, "right").show()
 
+print("Full outer join\n")
 DataSetA.join(DataSetB, join_expr, "full").show()
