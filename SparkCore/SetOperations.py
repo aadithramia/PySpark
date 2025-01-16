@@ -9,12 +9,12 @@ spark = SparkSession.builder.appName("CreateDF") \
 
 print("A")
 A = [(1, "Alice"), (2, "Bob"), (3, "Cathy")]
-A = spark.createDataFrame(A, ["Name", "Age"])
+A = spark.createDataFrame(A, ["ID", "Name"])
 A.show()
 
 print("B")
 B = [(1, "Alice"), (4, "Dave"), (5, "Elena")]
-B = spark.createDataFrame(B, ["Name", "Age"])
+B = spark.createDataFrame(B, ["ID","Name"])
 B.show()
 
 #union
