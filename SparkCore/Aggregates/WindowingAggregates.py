@@ -25,8 +25,11 @@ running_total_window = Window.partitionBy("Country") \
 A.withColumn("RunningTotal", sum("Sales").over(running_total_window)).show()
 
 print("running total for last 3 weeks")
-running_total_window = Window.partitionBy("Country") \
+running_total_window_trailing_2 = Window.partitionBy("Country") \
 						.orderBy("WeekNumber") \
 						.rowsBetween(-2, Window.currentRow)
 
-A.withColumn("RunningTotal", sum("Sales").over(running_total_window)).show()
+A.withColumn("RunningTotal", sum("Sales").over(running_total_window_trailing_2)).show()
+
+print("row number")
+A.withColumn("RowNum", row_number().over(running_total_window)).show()
