@@ -11,3 +11,4 @@ dependencies/*
 **/input_dir/*
 *.tar
 **/.ipynb_checkpoints/*
+SparkCore/ReadingAndWriting/data/output/*

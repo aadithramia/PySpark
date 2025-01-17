@@ -10,11 +10,6 @@ spark = SparkSession.builder.appName("static_static_join")\
 	.config("spark.sql.shuffle.partitions", 3) \
 	.getOrCreate()
 
-
-# A = spark.read \
-# 	.option("sep","\t") \
-# 	.csv(r"C:\Users\shravanr\learning\spark\pyspark\SparkCore\Join\data\a.csv", header=True,sep='\t,' inferSchema=True)
-
 A = spark.read \
     .option("sep", "\t") \
     .option("header", "true") \
